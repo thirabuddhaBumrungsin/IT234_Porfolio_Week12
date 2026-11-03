@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>พอร์ตโฟลิโอ | นักออกแบบระบบและจัดการข้อมูล</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Sarabun:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B1F4B; --navy-deep:#07142F; --orange:#F57C00; --orange-soft:#FFB05C;
+  --ink:#F4F6FB; --ink-dim:#C5CCDD;
+  --glass:rgba(255,255,255,.10); --glass-line:rgba(255,255,255,.22);
+  --font-head:'Kanit','Sarabun',sans-serif; --font-body:'Sarabun','Kanit',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);font-size:1.0625rem;line-height:1.75;color:var(--ink);background:var(--navy-deep);min-height:100vh}
+
+/* พื้นหลังตึก BU: วางรูปไว้ที่ images/bu-campus.jpg (ถ้าไม่มีรูปจะใช้ไล่สีน้ำเงินแทน) */
+.bg{position:fixed;inset:0;z-index:-2;
+  background:
+    linear-gradient(180deg,rgba(7,20,47,.62),rgba(7,20,47,.9)),
+    url("images/bu-campus.jpg") center/cover no-repeat,
+    linear-gradient(135deg,#0B1F4B 0%,#173a7a 55%,#F57C00 140%);
+  filter:blur(3px);transform:scale(1.04)}
+
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--orange-soft);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto}
+
+nav{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(7,20,47,.45);border-bottom:1px solid var(--glass-line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:.8rem}
+.brand{font-family:var(--font-head);font-weight:500;font-size:1.05rem}
+.links{display:flex;gap:1.4rem;font-size:.98rem;color:var(--ink-dim)}
+.links a:hover{color:var(--orange-soft)}
+
+.hero{min-height:92vh;display:flex;align-items:center;padding-block:5rem}
+.hero h1{font-family:var(--font-head);font-weight:600;font-size:clamp(2.1rem,6.2vw,4.1rem);line-height:1.25;max-width:17ch}
+.hero h1 small{display:block;margin-top:.6rem;font-size:.42em;font-weight:400;color:var(--orange-soft);letter-spacing:.02em}
+.hero p{margin-top:1.6rem;max-width:34rem;font-size:1.2rem;color:var(--ink-dim)}
+.btns{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.2rem}
+.btn{font-family:var(--font-head);font-weight:500;padding:.8rem 1.7rem;border-radius:999px;border:1px solid var(--glass-line);
+  background:var(--glass);backdrop-filter:blur(10px);transition:background .2s,transform .2s}
+.btn:hover{background:rgba(255,255,255,.2)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.primary:hover{background:#ff8f1f}
+
+section.block{padding-block:4.5rem}
+h2{font-family:var(--font-head);font-weight:600;font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.3}
+h2::after{content:"";display:block;width:56px;height:4px;margin-top:.7rem;border-radius:4px;background:var(--orange)}
+.intro{margin-top:1rem;color:var(--ink-dim);max-width:36rem}
+
+.glass{background:var(--glass);border:1px solid var(--glass-line);border-radius:20px;
+  backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:0 10px 40px rgba(3,10,30,.35)}
+
+.main-skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;margin-top:2.2rem}
+.skill-main{padding:1.7rem;border-top:4px solid var(--orange)}
+.skill-main:nth-child(2){border-top-color:#6C8CFF}
+.skill-main h3{font-family:var(--font-head);font-weight:500;font-size:1.3rem}
+.skill-main p{margin-top:.4rem;color:var(--ink-dim)}
+.tags{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.4rem}
+.tag{padding:.4rem 1rem;border-radius:999px;font-size:.95rem;background:var(--glass);border:1px solid var(--glass-line);backdrop-filter:blur(8px)}
+.tag.accent{background:rgba(245,124,0,.18);border-color:rgba(255,176,92,.5);color:var(--orange-soft)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem;margin-top:2.2rem}
+.project{padding:1.8rem;display:flex;flex-direction:column;transition:transform .25s,border-color .25s}
+.project:hover{transform:translateY(-4px);border-color:var(--orange-soft)}
+.project h3{font-family:var(--font-head);font-weight:500;font-size:1.25rem;line-height:1.45}
+.project p{margin-top:.8rem;color:var(--ink-dim);flex:1}
+.project .tags{margin-top:1.3rem}
+.project a.more{margin-top:1.1rem;color:var(--orange-soft);font-family:var(--font-head)}
+
+.contact-card{margin-top:2rem;padding:2.2rem;display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
+.contact-card p{max-width:30rem;color:var(--ink-dim)}
+footer{padding:2.5rem 0 3rem;text-align:center;color:var(--ink-dim);font-size:.95rem}
+.error{padding:2rem;text-align:center}
+
+
+.about{display:grid;grid-template-columns:220px 1fr;gap:2rem;align-items:center;margin-top:2.2rem;padding:2rem}
+.about img{width:220px;height:220px;object-fit:cover;object-position:center 20%;border-radius:50%;border:4px solid var(--orange);box-shadow:0 8px 30px rgba(3,10,30,.45)}
+.about h3{font-family:var(--font-head);font-weight:500;font-size:1.5rem}
+.about .fac{color:var(--orange-soft);margin-top:.2rem}
+.about p.txt{margin-top:1rem;color:var(--ink-dim);max-width:38rem}
+.activity{overflow:hidden;display:flex;flex-direction:column}
+.activity .ph{position:relative;aspect-ratio:4/3;overflow:hidden}
+.activity .ph img{width:100%;height:100%;object-fit:cover;object-position:center 65%;display:block}
+.activity .badge{position:absolute;left:.9rem;top:.9rem;padding:.25rem .85rem;border-radius:999px;font-family:var(--font-head);font-size:.88rem;background:var(--orange);color:#fff}
+.activity .bd{padding:1.4rem 1.6rem 1.7rem}
+.activity h3{font-family:var(--font-head);font-weight:500;font-size:1.18rem;line-height:1.45}
+.activity p{margin-top:.6rem;color:var(--ink-dim)}
+@media (max-width:640px){.about{grid-template-columns:1fr;text-align:center;justify-items:center}}
+
+/* เปิดหน้าเว็บ: เนื้อหา Hero ค่อยๆ ปรากฏครั้งเดียว */
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero .wrap{animation:rise .9s ease both}
+@media (max-width:640px){.links{display:none}.hero{min-height:84vh}.contact-card{padding:1.6rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" id="brand">พอร์ตโฟลิโอ</a>
+    <div class="links">
+      <a href="#about">เกี่ยวกับ</a>
+      <a href="#skills">ทักษะ</a>
+      <a href="#projects">ผลงาน</a>
+      <a href="#activities">กิจกรรม</a>
+      <a href="#contact">ติดต่อ</a>
+    </div>
+  </div>
+</nav>
+
+<main id="app"><div class="wrap error glass" style="margin-top:4rem">กำลังโหลดข้อมูล...</div></main>
+<footer id="footer"></footer>
+
+<script>
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+fetch('data.json')
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(render)
+  .catch(() => {
+    document.getElementById('app').innerHTML =
+      '<div class="wrap error glass" style="margin-top:4rem"><h2 style="font-size:1.4rem">โหลดข้อมูลไม่สำเร็จ</h2>' +
+      '<p class="intro" style="margin-inline:auto">เปิดไฟล์ผ่านเซิร์ฟเวอร์ เช่น GitHub Pages หรือส่วนเสริม Live Server ใน VS Code ' +
+      'เพราะเบราว์เซอร์ไม่อนุญาตให้อ่าน data.json เมื่อดับเบิลคลิกเปิดไฟล์โดยตรง</p></div>';
+  });
+
+function render(d){
+  document.title = d.site.title;
+  document.getElementById('brand').textContent = d.site.owner;
+
+  const hero = `
+  <section class="hero" id="top"><div class="wrap">
+    <h1>${esc(d.hero.title)}</h1>
+    <p>${esc(d.hero.description)}</p>
+    <div class="btns">${d.hero.buttons.map(b =>
+      `<a class="btn${b.primary ? ' primary' : ''}" href="${esc(b.href)}">${esc(b.label)}</a>`).join('')}</div>
+  </div></section>`;
+
+  const about = `
+  <section class="block" id="about"><div class="wrap">
+    <h2>${esc(d.about.heading)}</h2>
+    <div class="glass about">
+      <img src="${esc(d.about.photo)}" referrerpolicy="no-referrer" alt="รูปโปรไฟล์ ${esc(d.about.name)}">
+      <div><h3>${esc(d.about.name)}</h3><p class="fac">${esc(d.about.faculty)}</p><p class="txt">${esc(d.about.text)}</p></div>
+    </div>
+  </div></section>`;
+
+  const activities = `
+  <section class="block" id="activities"><div class="wrap">
+    <h2>${esc(d.activities.heading)}</h2>
+    <p class="intro">${esc(d.activities.intro)}</p>
+    <div class="grid">${d.activities.items.map(a => `
+      <article class="glass activity">
+        <div class="ph"><img src="${esc(a.image)}" referrerpolicy="no-referrer" alt="${esc(a.alt)}" loading="lazy"><span class="badge">${esc(a.badge)}</span></div>
+        <div class="bd"><h3>${esc(a.title)}</h3><p>${esc(a.description)}</p></div>
+      </article>`).join('')}</div>
+  </div></section>`;
+
+  const skills = `
+  <section class="block" id="skills"><div class="wrap">
+    <h2>${esc(d.skills.heading)}</h2>
+    <p class="intro">${esc(d.skills.intro)}</p>
+    <div class="main-skills">${d.skills.main.map(s =>
+      `<article class="glass skill-main"><h3>${esc(s.name)}</h3><p>${esc(s.detail)}</p></article>`).join('')}</div>
+    <div class="tags">${d.skills.extra.map(t => `<span class="tag accent">${esc(t)}</span>`).join('')}</div>
+  </div></section>`;
+
+  const projects = `
+  <section class="block" id="projects"><div class="wrap">
+    <h2>${esc(d.projects.heading)}</h2>
+    <p class="intro">${esc(d.projects.intro)}</p>
+    <div class="grid">${d.projects.items.map(p => `
+      <article class="glass project">
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.description)}</p>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+        ${p.link ? `<a class="more" href="${esc(p.link)}" target="_blank" rel="noopener">ดูรายละเอียดโครงการ</a>` : ''}
+      </article>`).join('')}</div>
+  </div></section>`;
+
+  const contact = `
+  <section class="block" id="contact"><div class="wrap">
+    <h2>${esc(d.contact.heading)}</h2>
+    <div class="glass contact-card">
+      <p>${esc(d.contact.text)}</p>
+      <div class="btns" style="margin:0">
+        <a class="btn primary" href="mailto:${esc(d.site.email)}">ส่งอีเมล</a>
+        ${d.site.github ? `<a class="btn" href="${esc(d.site.github)}" target="_blank" rel="noopener">GitHub</a>` : ''}
+      </div>
+    </div>
+  </div></section>`;
+
+  document.getElementById('app').innerHTML = hero + about + skills + projects + activities + contact;
+  document.getElementById('footer').textContent = `${d.site.owner} | ${d.site.university}`;
+}
+</script>
+</body>
+</html>
